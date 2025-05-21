@@ -54,7 +54,7 @@ let Mouse = {
     RDown: false
 };
 
-let FOV = 45;
+let FOV = 30;
 
 function Convert(x, y, z) {
     return {
@@ -109,6 +109,10 @@ class Point {
     }
 
     Update() {
+        this.x += Math.random() * 2 - 1;
+        this.y += Math.random() * 2 - 1;
+        
+
         if (this.z <= 0) {
             this.z = 1; // Reset z if it gets too close
         }
@@ -132,7 +136,7 @@ let points = [];
 for (let i = 15; i > 5; i -= 0.5) {
     for (let j = -50; j < 50; j += 5) {
         for (let k = -50; k < 50; k += 5) {
-            points.push(new Point(k, j, i)); // Random starting z for depth effect
+            points.push(new Point(k / Math.random(), j * Math.random(), i)); // Random starting z for depth effect
         }
     }
 }
