@@ -39,6 +39,14 @@ document.addEventListener("mouseup", (e) => {
     }
 });
 
+const keys = new Set();
+document.addEventListener("keydown", (e) => {
+    keys.add(e.key);
+});
+document.addEventListener("keyup", (e) => {
+    keys.delete(e.key);
+});
+
 let Mouse = {
     X: 0,
     Y: 0,
@@ -46,15 +54,24 @@ let Mouse = {
     RDown: false
 };
 
-let FOV = 60;
+let FOV = 45;
 
 function Convert(x, y, z) {
     return {
-        x: (x / z) * FOV + innerWidth / 2,
-        y: (y / z) * FOV + innerHeight / 2,
-        size: (1 / z) * FOV
+        x: ((x - Player.x) / (z - Player.z)) * FOV + innerWidth / 2,
+        y: ((y - Player.y) / (z - Player.z)) * FOV + innerHeight / 2,
+        size: (1 / (z - Player.z)) * FOV
     }
 }
+
+function keydown(e) {
+    if (keys.has(e.key)) {
+        return 1;
+    }else{
+        return 0;
+    }
+}
+
 class Cam {
     constructor(x, y, z) {
         this.x = x;
@@ -92,9 +109,6 @@ class Point {
     }
 
     Update() {
-
-        
-
         if (this.z <= 0) {
             this.z = 1; // Reset z if it gets too close
         }
@@ -106,7 +120,7 @@ class Point {
     }
 
     Draw() {
-        Ctx.fillStyle = "white";
+        Ctx.fillStyle = `rgb(${(15 - this.z) * 255 / 15}, ${(20 - this.z) * 255 / 20}, ${(15 - this.z) * 255 / 15})`; // Color based on z and size
         Ctx.beginPath();
         Ctx.ellipse(this.u, this.v, this.size, this.size, 0, 0, Math.PI * 2);
         Ctx.fill();
@@ -115,9 +129,11 @@ class Point {
 
 let points = [];
 
-for (let i = -20; i < 20; i++) {
-    for (let j = -20; j < 20; j++) {
-        points.push(new Point(i, 0, 0.5)); // Random starting z for depth effect
+for (let i = 15; i > 5; i -= 0.5) {
+    for (let j = -50; j < 50; j += 5) {
+        for (let k = -50; k < 50; k += 5) {
+            points.push(new Point(k, j, i)); // Random starting z for depth effect
+        }
     }
 }
 
@@ -127,11 +143,10 @@ function Frame() {
     Ctx.fillStyle = "black";
     Ctx.fillRect(0, 0, innerWidth, innerHeight);  // Corrected canvas dimensions
 
-    // Update and draw each point
-    points.forEach((point) => {
+    for (let point of points) {
         point.Update();
         point.Draw();
-    });
+    }
 
     Ctx.fillStyle = "white"; 
     Ctx.fillText("Mouse X: " + Mouse.X + " Y: " + Mouse.Y, 10, 10);
