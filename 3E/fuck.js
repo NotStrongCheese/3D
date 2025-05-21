@@ -109,8 +109,8 @@ class Point {
     }
 
     Update() {
-        this.x += Math.random() * 2 - 1;
-        this.y += Math.random() * 2 - 1;
+        this.x += Math.random() * 20 - 10;
+        this.y += Math.random() * 20 - 10;
         
 
         if (this.z <= 0) {
