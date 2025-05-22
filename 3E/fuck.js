@@ -59,7 +59,7 @@ document.addEventListener("keyup", (e) => {
     Keys.delete(e.key); // Correct property 'key'
 });
 
-let FOV = 360;
+let FOV = 300;
 
 function Convert(x, y, z) {
     // Translate world position relative to camera
@@ -171,7 +171,7 @@ class Point {
     }
 
     Draw() {
-        Ctx.fillStyle = `rgb(${(15 - this.z) * 255 / 15}, ${(20 - this.z) * 255 / 20}, ${(15 - this.z) * 255 / 15})`; // Color based on z and size
+        Ctx.fillStyle = `rgb(${(75 - this.z) * 255 / 75}, ${(100 - this.z) * 255 / 100}, ${(75 - this.z) * 255 / 75})`; // Color based on z and size
         Ctx.beginPath();
         Ctx.ellipse(this.u, this.v, this.size, this.size, 0, 0, Math.PI * 2);
         Ctx.fill();
@@ -180,7 +180,7 @@ class Point {
 
 let points = [];
 
-for (let i = 15; i > 5; i -= 0.5) {
+for (let i = 105; i > 5; i -= 5) {
     for (let j = -50; j < 50; j += 5) {
         for (let k = -50; k < 50; k += 5) {
             points.push(new Point(k, j, i)); // Fix: Directly use k for x, and j for y (avoid division)
