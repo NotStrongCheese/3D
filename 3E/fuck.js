@@ -107,7 +107,7 @@ class Cam {
     }
 
     Update() {
-        const speed = 0.5;
+        const speed = Math.cos(28/180*Math.PI)/Math.sin(28/180*Math.PI);
 
         // Movement direction vectors
         let forwardX = Math.sin(this.ry);
@@ -115,6 +115,11 @@ class Cam {
         let rightX = Math.cos(this.ry);
         let rightZ = -Math.sin(this.ry);
 
+        //Player.rx -= 1/180*Math.PI;
+        Player.ry -= 1/180*Math.PI;
+        this.x += rightX * speed
+        this.z += rightZ * speed
+        
         // Forward / Backward
         if (Keys.has("w")) {
             this.x += forwardX * speed;
@@ -142,7 +147,7 @@ class Cam {
 }
 
 
-let Player = new Cam(0, 0, 0);
+let Player = new Cam(0, 0, -50);
 
 class Point {
     constructor(x, y, z) {
@@ -171,7 +176,7 @@ class Point {
     }
 
     Draw() {
-        Ctx.fillStyle = `rgb(${(75 - this.z) * 255 / 75}, ${(100 - this.z) * 255 / 100}, ${(75 - this.z) * 255 / 75})`; // Color based on z and size
+        Ctx.fillStyle = /*`rgb(0, 255, 0)`*/`rgb(${(60 - this.x) * 255 / 60}, ${(60 - this.y) * 255 / 60}, ${(100 - this.z) * 255 / 100})`; // Color based on z and size
         Ctx.beginPath();
         Ctx.ellipse(this.u, this.v, this.size, this.size, 0, 0, Math.PI * 2);
         Ctx.fill();
