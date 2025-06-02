@@ -116,9 +116,9 @@ class Cam {
         let rightZ = -Math.sin(this.ry);
 
         //Player.rx -= 1/180*Math.PI;
-        Player.ry -= 1/180*Math.PI;
-        this.x += rightX * speed
-        this.z += rightZ * speed
+        //Player.ry -= 1/180*Math.PI;
+        //this.x += rightX * speed
+        //this.z += rightZ * speed
         
         // Forward / Backward
         if (Keys.has("w")) {
@@ -162,8 +162,8 @@ class Point {
     }
 
     Update() {
-        //this.x += Math.random() * 20 - 10;
-        //this.y += Math.random() * 20 - 10;
+        //this.x += Math.random() * 10 - 5;
+        //this.y += Math.random() * 10 - 5;
         
         if (this.z <= 0) {
             this.z = 0.1; // Reset z if it gets too close
