@@ -107,7 +107,7 @@ class Cam {
     }
 
     Update() {
-        const speed = Math.cos(28/180*Math.PI)/Math.sin(28/180*Math.PI);
+        const speed = 1;//Math.cos(28/180*Math.PI)/Math.sin(28/180*Math.PI);
 
         // Movement direction vectors
         let forwardX = Math.sin(this.ry);
@@ -131,6 +131,15 @@ class Cam {
         }
 
         // Left / Right
+        // Hide the mouse cursor
+        function hideMouseCursor() {
+            document.body.style.cursor = "none";
+        }
+        
+        // Call the function to hide the cursor
+        hideMouseCursor();
+        
+        // Existing code
         if (Keys.has("a")) {
             this.x += rightX * speed;
             this.z += rightZ * speed;
@@ -139,11 +148,11 @@ class Cam {
             this.x -= rightX * speed;
             this.z -= rightZ * speed;
         }
-
+        
         // Up / Down
         if (Keys.has("q")) this.y -= speed;
         if (Keys.has("e")) this.y += speed;
-    }
+        }
 }
 
 
